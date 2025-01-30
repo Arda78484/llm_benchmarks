@@ -1,0 +1,4 @@
+timestamp,hostname,api,model,precision,input_tokens,output_tokens,prefill_time,prefill_rate,decode_time,decode_rate,memory
+20250130 16:08:59,openzeka-desktop,MLC,qwen2.5:0.5b,q4f16_ft-MLC,39.0,135.0,0,31.39934863217949,0,108.69005295754438,104.6875
+20250130 16:10:41,openzeka-desktop,MLC,qwen2.5:0.5b,q4f16_ft-MLC,39.0,134.8,0,30.940295935045366,0,106.8535395587597,108.28125
+20250130 16:52:24,openzeka-desktop,MLC,qwen2.5:7b,q4f16_ft-MLC,39.0,132.5,0,4.764851651638608,0,16.1892717251282,103.609375

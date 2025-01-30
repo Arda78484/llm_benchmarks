@@ -1,0 +1,3 @@
+timestamp,hostname,api,model,precision,input_tokens,output_tokens,prefill_time,prefill_rate,decode_time,decode_rate,memory
+20250130 16:30:01,openzeka-desktop,Ollama,qwen2.5:0.5b,fp16,49.0,131.4,0,21.282848326720323,0,56.75144640526281,107.8984375
+20250130 16:41:46,openzeka-desktop,Ollama,qwen2.5:7b,fp16,49.0,126.0,0,3.787087522171495,0,9.737096056798972,100.484375
