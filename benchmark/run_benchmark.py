@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Benchmark a quantized GGML model using the Ollama LLM API with the OpenAI client.
+Benchmark llm models using the OpenAI API.
 """
 import os
 import time
@@ -16,7 +16,7 @@ from colorama import init, Fore, Style
 init(autoreset=True)
 
 # Constants
-MODELS = ["qwen2.5:0.5b", "qwen2.5:7b"]
+MODELS = ["qwen2.5:0.5b", "qwen2.5:7b", "qwen/qwen2.5-7b-instruct"]
 DEFAULT_PROMPTS = [
     "What is the meaning of life?",
     "How many points did you list out?",
@@ -37,6 +37,11 @@ DEFAULT_API_CONFIG = {
         "name": "MLC",
         "api_base": "http://0.0.0.0:9000/v1",
         "api_key": "*"
+    },
+    "nim": {
+        "name": "nim",
+        "api_base": "https://integrate.api.nvidia.com/v1",
+        "api_key" : "nim_api_key"
     }
 }
 CSV_DIR = "../data/"
@@ -49,8 +54,13 @@ parser.add_argument('-p', '--prompt', type=str, help="Single prompt override")
 parser.add_argument('--runs', type=int, default=DEFAULT_RUNS)
 parser.add_argument('--save', type=str, default='', help='CSV file to save benchmarking results to')
 parser.add_argument('--api', type=str, choices=DEFAULT_API_CONFIG, default='ollama', help='Choose the API to use: ollama or mlc')
+parser.add_argument('--nim_api', type=str, help='Nim API key override')
 args = parser.parse_args()
+
 api_config = DEFAULT_API_CONFIG.get(args.api)
+if args.api == 'nim' and args.nim_api:
+    api_config['api_key'] = args.nim_api
+
 
 def query_model_response(model: str, prompt: str):
     """Sends the prompt to the API and returns response metadata."""
@@ -72,6 +82,7 @@ def query_model_response(model: str, prompt: str):
             model=model,
             messages=chat,
             max_tokens=1024,
+            timeout=30
         )
     except Exception as e:
         print(f"Error: {e}")
